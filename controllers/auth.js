@@ -23,7 +23,7 @@ const createUser = async(req, res = response) => {
         
         await user.save();
         const token  = generateJWT(user.id, user.name);
-        res.status(201).json({
+        return res.status(201).json({
             ok:true,
             uid: user.id,
             name: user.name,
@@ -32,7 +32,7 @@ const createUser = async(req, res = response) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             msg: 'Please contact admin'
         })
@@ -62,7 +62,7 @@ const loginUser = async(req, res = response) => {
 
         // Generate JWT
         const token  = await generateJWT(user.id, user.name);
-        res.json({
+        return res.json({
             ok:true,
             uid: user.id,
             name: user.name,
@@ -72,7 +72,7 @@ const loginUser = async(req, res = response) => {
     } catch (error) {
         
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             msg: 'Please contact admin'
         })
@@ -84,7 +84,7 @@ const renewToken = async(req, res = response) => {
         const uid = req.uid;
         const name = req.name;
         const token  = await generateJWT(uid, name);
-        res.json({
+        return res.json({
             ok:true,
             token,
             uid,
@@ -92,7 +92,7 @@ const renewToken = async(req, res = response) => {
         })
     } catch (error) {
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             msg: 'Please contact admin',
         })
